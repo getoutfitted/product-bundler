@@ -6,7 +6,9 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('METEOR@1.3.2');
+  api.versionsFrom('METEOR@1.3');
+  api.use('meteor-platform');
+  api.use('less');
   api.use('underscore');
   api.use('standard-minifiers');
   api.use('reactioncommerce:core');
@@ -16,5 +18,14 @@ Package.onUse(function (api) {
 
   api.addFiles([
     'server/registry.js',
+    'server/publications/products.js',
+    'server/methods/productBundler.js'
   ], 'server');
+
+  api.addFiles([
+    'client/templates/settings/settings.html',
+    'client/templates/settings/settings.js',
+    'client/templates/dashboard/dashboard.html',
+    'client/templates/dashboard/dashboard.js'
+  ], 'client');
 });

@@ -1,0 +1,66 @@
+<template name='productBundlesDashboard'>
+  <div class='container text-center'>
+    <div class='row'>
+      <h1>Product Bundle Creator</h1>
+      <p>Add multiple products in a single container which presents like a product, but when checkout occurs acts like single line items.</p>
+    </div>
+    {{#if anyExistingBundles}}
+    <div class='row'>
+      <h2>Existing Bundles</h2>
+      {{#each existingBundles}}
+        {{title}}
+      {{/each}}
+    </div>
+    {{/if}}
+    <h2>Create a New Bundle</h2>
+    <form id='createBundle'>
+      <div class='row'>
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <label for='bundleTitle'>Bundle Title</label>
+            <input id='bundleTitle' name='bundleTitle' class='form-control' placeholder='Basic Reaction Product' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundlePageTitle'>Bundle PageTitle</label>
+            <input id='bundlePageTitle' name='bundlePageTitle' class='form-control' placeholder='This is a basic product. You can do a lot with it.' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundleDescription'>Bundle Description</label>
+            <textarea id='bundleDescription' name='bundleDescription' placeholder='Description...' class="form-control" rows="3" required></textarea>
+          </div>
+          <div class='form-group'>
+            <label for='bundleHandle'>Bundle Handle</label>
+            <p><em>Handles cannot contain spaces. <a target='_blank' href='http://slugify.net/'>Go here for help</a></em></p>
+            <input id='bundleHandle' name='bundleHandle' class='form-control' placeholder='Example: example-product' required>
+          </div>
+        </div>
+        <div class='col-md-6'>
+          <div class='form-group'>
+            <label for='bundleVendor'>Bundle Vendor</label>
+            <input id='bundleVendor' name='bundleVendor' class='form-control' placeholder='Example: Vendor 1, Vendor 2, Vendor 3, etc.' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundleProductType'>Package Type</label>
+            <input id='bundleProductType' name='bundleProductType' class='form-control' placeholder='Example: Camping Package, Ski Package, etc' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundlePrice'>Bundle Price</label>
+            <input type='number' name='bundlePrice'  id='bundlePrice' class='form-control' placeholder='Example: Camping Package, Ski Package, etc' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundleHashtags'>Bundle Hashtags</label>
+            <p><em>Hashtags must be separated by <code>,</code></em></p>
+            <input id='bundleHashtags' name='bundleHashtags' class='form-control' placeholder='Womens, Winter, Outfit' required>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <button  class='btn btn-block btn-default'>Submit</button>
+
+      </div>
+    </form>
+    {{#each topProducts}}
+      {{title}}
+    {{/each}}
+  </div>
+</template>
