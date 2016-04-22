@@ -20,8 +20,8 @@ Meteor.methods({
     variant.functionalType = 'bundleVariant';
     variant.type = 'variant';
     variant.shopId = ReactionCore.getShopId();
-    let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}})
-    ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.')
+    let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}});
+    ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.');
   },
   'productBundles/createBundleProduct': function (product, hashtags) {
     check(product, {
@@ -46,7 +46,7 @@ Meteor.methods({
       _.each(hashtags, function (hashtag) {
         Meteor.call('products/updateProductTags', productId, hashtag.trim(), null);
       });
-      ReactionCore.Log.info('Bundle Product ' + productId + ' was successfully created.')
+      ReactionCore.Log.info('Bundle Product ' + productId + ' was successfully created.');
       Meteor.call('productBundles/createBundleVariant', productId, product);
     }
   }

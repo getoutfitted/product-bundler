@@ -15,3 +15,17 @@ Template.productBundleEdit.helpers({
 });
 
 
+Template.addProductsToBundle.onCreated(function () {
+  this.subscribe('ProductsForBundles');
+});
+
+Template.addProductsToBundle.helpers({
+  allTopProducts: function () {
+    return ReactionCore.Collections.Products.find({
+      shopId: ReactionCore.getShopId(),
+      type: 'simple',
+      ancestors: [],
+      funtionalType: { $ne: 'bundle'}
+    });
+  }
+});
