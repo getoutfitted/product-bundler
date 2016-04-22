@@ -14,5 +14,26 @@
 
 <template name='addProductsToBundle'>
   <h2>Add Products to be part of Bundle {{title}}</h2>
-
+    <div class='row'>
+      <form data-bundleId={{_id}}>
+        <select id='selectProduct' class="form-control">
+          <option disabled>Select A Product</option>
+          {{#each allTopProducts}}
+            <option value='{{_id}}'>{{gender}} - {{vendor}} - {{title}} - {{productType}}</option>
+          {{/each}}
+        </select>
+        {{#if productSelected}}
+          <h4>Check Variants that you want enabled in Bundle</h4>
+          {{#each allVariantsForSelectedProduct}}
+            <div class='col-sm-2'>
+              <div class="checkbox">
+                <label>
+                  <input value='{{_id}}' type="checkbox">{{size}}-{{color}}-{{sku}}
+                </label>
+              </div>
+            </div>
+          {{/each}}
+        {{/if}}
+      </form>
+    </div>
 </template>
