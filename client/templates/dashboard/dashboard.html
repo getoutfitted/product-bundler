@@ -7,9 +7,30 @@
     {{#if anyExistingBundles}}
     <div class='row'>
       <h2>Existing Bundles</h2>
-      {{#each existingBundles}}
-        {{title}}
-      {{/each}}
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Title</th>
+            <th>Package Type</th>
+            <th>Vendor</th>
+            <th>Handle</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each existingBundles}}
+            <tr class='text-left'>
+              <td><a href="{{pathFor 'productBundleEdit' _id=_id}}" class='btn btn-default'>Edit/Add Products</a></td>
+              <td>{{title}}</td>
+              <td>{{productType}}</td>
+              <td>{{vendor}}</td>
+              <td>{{handle}}</td>
+              <td>${{price.range}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
     {{/if}}
     <h2>Create a New Bundle</h2>
@@ -59,8 +80,5 @@
 
       </div>
     </form>
-    {{#each topProducts}}
-      {{title}}
-    {{/each}}
   </div>
 </template>
