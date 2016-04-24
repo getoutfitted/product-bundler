@@ -1,6 +1,6 @@
 Meteor.publish('ProductsForBundles', function () {
   const shop = ReactionCore.getCurrentShop();
-  if (Roles.userIsInRole(this.userId, ["admin", "createProduct"], shop._id)) {
+  if (Roles.userIsInRole(this.userId, ['admin', 'createProduct'], shop._id)) {
     return ReactionCore.Collections.Products.find({});
   }
   return this.ready();
@@ -9,7 +9,7 @@ Meteor.publish('ProductsForBundles', function () {
 Meteor.publish('BundleProductAndVariants', function (orderId) {
   check(orderId, String);
   const shopId = ReactionCore.getShopId();
-  if (Roles.userIsInRole(this.userId, ["admin", "createProduct"], ReactionCore.getShopId())) {
+  if (Roles.userIsInRole(this.userId, ['admin', 'createProduct'], ReactionCore.getShopId())) {
     return ReactionCore.Collections.Products.find({
       shopId: shopId,
       $or: [

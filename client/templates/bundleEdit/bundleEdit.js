@@ -6,11 +6,40 @@ Template.productBundleEdit.onCreated(function () {
 });
 
 Template.productBundleEdit.helpers({
-  thisProduct: function () {
-    return ReactionCore.Collections.Products.findOne({
+  bundleVariant: function () {
+    const bundleVariant = ReactionCore.Collections.Products.findOne({
       shopId: ReactionCore.getShopId(),
       ancestors: ReactionRouter.getParam('_id')
     });
+    Session.set('bundleVariant', bundleVariant._id);
+    return bundleVariant;
+  },
+  productsAddedToBundle: function () {
+    return this.bundleProducts.length > 0;
+  },
+  productsInBundle: function () {
+    return this.bundleProducts;
+  },
+  details: function (id, value) {
+    let product = ReactionCore.Collections.Products.findOne(id);
+    if (product) {
+      return product[value];
+    }
+    return 'Loading...';
+  }
+});
+
+Template.productBundleEdit.events({
+  'click .deleteBundle': function (event) {
+    event.preventDefault();
+    let bundleId = ReactionRouter.getParam('_id');
+    Meteor.call('products/deleteProduct', bundleId);
+  },
+  'click .deleteProduct': function (event) {
+    event.preventDefault();
+    const productId = event.target.dataset.productId;
+    const bundleId = Session.get('bundleVariant');
+    Meteor.call('productBundles/deleteProduct', bundleId, productId);
   }
 });
 

@@ -55,6 +55,40 @@ Meteor.methods({
     check(productId, String);
     check(variantIds, [String]);
     check(label, Match.Optional(String));
-
+    let product = {
+      productId: productId,
+      variantIds: variantIds
+    };
+    if (label) {
+      product.label = label;
+    }
+    ReactionCore.Collections.Products.update({
+      _id: bundleVariantId
+    }, {
+      $addToSet: {
+        bundleProducts: product
+      }
+    }, {
+      selector: {
+        type: 'variant'
+      }
+    });
+  },
+  'productBundles/deleteProduct': function (bundleVariantId, productId) {
+    check(bundleVariantId, String);
+    check(productId, String);
+    ReactionCore.Collections.Products.update({
+      _id: bundleVariantId
+    }, {
+      $pull: {
+        bundleProducts: {
+          productId: productId
+        }
+      }
+    }, {
+      selector: {
+        type: 'variant'
+      }
+    });
   }
 });
