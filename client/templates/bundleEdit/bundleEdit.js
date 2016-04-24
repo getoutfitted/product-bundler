@@ -34,6 +34,7 @@ Template.productBundleEdit.events({
     event.preventDefault();
     let bundleId = ReactionRouter.getParam('_id');
     Meteor.call('products/deleteProduct', bundleId);
+    ReactionRouter.go('productBundles');
   },
   'click .deleteProduct': function (event) {
     event.preventDefault();
