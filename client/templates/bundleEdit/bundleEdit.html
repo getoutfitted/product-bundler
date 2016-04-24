@@ -5,7 +5,10 @@
     {{#with thisProduct}}
     <div class='row'>
       <h2>{{title}}</h2>
-      <p>{{description}}</p>
+      <p>${{price}}</p>
+    </div>
+    <div class='row'>
+      <h2>Products In this Bundle</h2>
     </div>
     {{> addProductsToBundle}}
     {{/with}}
@@ -15,25 +18,41 @@
 <template name='addProductsToBundle'>
   <h2>Add Products to be part of Bundle {{title}}</h2>
     <div class='row'>
-      <form data-bundleId={{_id}}>
-        <select id='selectProduct' class="form-control">
-          <option disabled>Select A Product</option>
-          {{#each allTopProducts}}
-            <option value='{{_id}}'>{{gender}} - {{vendor}} - {{title}} - {{productType}}</option>
-          {{/each}}
-        </select>
-        {{#if productSelected}}
-          <h4>Check Variants that you want enabled in Bundle</h4>
-          {{#each allVariantsForSelectedProduct}}
-            <div class='col-sm-2'>
-              <div class="checkbox">
-                <label>
-                  <input value='{{_id}}' type="checkbox">{{size}}-{{color}}-{{sku}}
-                </label>
+      <form id='addProductToBundleForm' data-bundle-id={{_id}}>
+        <div class='row'>
+          <label for='selectProduct'>Select a Product</label>
+          <select name='selectedProduct' id='selectProduct' class="form-control">
+            <option disabled>Select A Product</option>
+            {{#each allTopProducts}}
+              <option value='{{_id}}'>{{gender}} - {{vendor}} - {{title}} - {{productType}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class='row'>
+          {{#if productSelected}}
+            <h4>Check Variants that you want enabled in Bundle</h4>
+            <div class='row'>
+            {{#each allVariantsForSelectedProduct}}
+              <div class='col-sm-2'>
+                <div class="checkbox">
+                  <label>
+                    <input value='{{_id}}' type="checkbox">{{size}}-{{color}}-{{sku}}
+                  </label>
+                </div>
+              </div>
+            {{/each}}
+            </div>
+            <div class='row'>
+              <div class="form-group">
+                <label for="label">Human Readable Label for Product *Optional</label>
+                <input name='itemLabel' type="text" class="form-control" id="label" placeholder="Ex: Example Product">
               </div>
             </div>
-          {{/each}}
-        {{/if}}
+            <div class='row'>
+              <button class='btn btn-default'>Add Product with Variants to Bundle</button>
+            </div>
+          {{/if}}
+        </div>
       </form>
     </div>
 </template>

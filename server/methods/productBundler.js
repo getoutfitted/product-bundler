@@ -49,5 +49,12 @@ Meteor.methods({
       ReactionCore.Log.info('Bundle Product ' + productId + ' was successfully created.');
       Meteor.call('productBundles/createBundleVariant', productId, product);
     }
+  },
+  'productBundles/addProductToBundle': function (bundleVariantId, productId, variantIds, label) {
+    check(bundleVariantId, String);
+    check(productId, String);
+    check(variantIds, [String]);
+    check(label, Match.Optional(String));
+
   }
 });
