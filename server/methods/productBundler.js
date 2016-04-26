@@ -20,6 +20,7 @@ Meteor.methods({
     variant.functionalType = 'bundleVariant';
     variant.type = 'variant';
     variant.shopId = ReactionCore.getShopId();
+    variant.inventoryManagement = false;
     let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}});
     ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.');
   },

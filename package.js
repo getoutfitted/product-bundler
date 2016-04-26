@@ -19,7 +19,8 @@ Package.onUse(function (api) {
   api.addFiles([
     'server/registry.js',
     'server/publications/products.js',
-    'server/methods/productBundler.js'
+    'server/methods/productBundler.js',
+    'server/hooks/before_copy_to_cart_hook.js'
   ], 'server');
 
   api.addFiles([

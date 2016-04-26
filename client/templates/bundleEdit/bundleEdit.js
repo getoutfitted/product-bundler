@@ -1,21 +1,26 @@
 Template.productBundleEdit.onCreated(function () {
   this.autorun(() => {
     let orderId = ReactionRouter.getParam('_id');
-    this.subscribe('BundleProductAndVariants', orderId);
+    if (orderId) {
+      this.subscribe('BundleProductAndVariants', orderId);
+    }
   });
 });
 
 Template.productBundleEdit.helpers({
   bundleVariant: function () {
-    const bundleVariant = ReactionCore.Collections.Products.findOne({
-      shopId: ReactionCore.getShopId(),
-      ancestors: ReactionRouter.getParam('_id')
-    });
-    Session.set('bundleVariant', bundleVariant._id);
-    return bundleVariant;
+    if (ReactionRouter.getParam('_id')) {
+      const bundleVariant = ReactionCore.Collections.Products.findOne({
+        shopId: ReactionCore.getShopId(),
+        ancestors: ReactionRouter.getParam('_id')
+      });
+      Session.set('bundleVariant', bundleVariant._id);
+      return bundleVariant;
+    }
+    return '';
   },
   productsAddedToBundle: function () {
-    return this.bundleProducts.length > 0;
+    return this.bundleProducts && this.bundleProducts.length > 0;
   },
   productsInBundle: function () {
     return this.bundleProducts;
