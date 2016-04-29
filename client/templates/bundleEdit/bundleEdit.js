@@ -99,7 +99,10 @@ Template.addProductsToBundle.events({
     let label = event.target.itemLabel.value;
     _.each(event.target, function (target) {
       if (target.type === 'checkbox' && target.checked) {
-        variantIds.push(target.value);
+        let variantInfo = {};
+        variantInfo.variantId = target.value;
+        variantInfo.label = event.target[target.value].value;
+        variantIds.push(variantInfo);
       }
     });
     if (variantIds.length > 0) {

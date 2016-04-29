@@ -54,7 +54,7 @@ Meteor.methods({
   'productBundles/addProductToBundle': function (bundleVariantId, productId, variantIds, label) {
     check(bundleVariantId, String);
     check(productId, String);
-    check(variantIds, [String]);
+    check(variantIds, [Object]);
     check(label, Match.Optional(String));
     let product = {
       productId: productId,

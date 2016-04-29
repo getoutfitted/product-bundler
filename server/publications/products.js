@@ -20,3 +20,5 @@ Meteor.publish('BundleProductAndVariants', function (orderId) {
   }
   return this.ready();
 });
+
+

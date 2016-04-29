@@ -1,6 +1,6 @@
 Package.describe({
   summary: 'Product Bundles support for Reaction!',
-  name: 'getoutfitted:product-bundles',
+  name: 'getoutfitted:product-bundler',
   version: '0.1.0',
   git: 'https://github.com/getoutfitted/product-bundles'
 });
