@@ -5,6 +5,15 @@ Package.describe({
   git: 'https://github.com/getoutfitted/product-bundles'
 });
 
+Npm.depends({
+  'jquery': '2.2.3',
+  'jquery-ui': '1.10.5',
+  'bootstrap-datepicker': '1.6.0',
+  'moment': '2.12.0',
+  'moment-timezone': '0.5.3',
+  'twix': '0.9.0'
+});
+
 Package.onUse(function (api) {
   api.versionsFrom('METEOR@1.3');
   api.use('meteor-platform');
@@ -14,7 +23,6 @@ Package.onUse(function (api) {
   api.use('reactioncommerce:core');
   api.use('reactioncommerce:reaction-router');
   api.use('reactioncommerce:reaction-collections');
-  api.use('momentjs:moment@2.10.6');
 
   api.addFiles([
     'server/registry.js',
@@ -29,6 +37,8 @@ Package.onUse(function (api) {
     'client/templates/dashboard/dashboard.html',
     'client/templates/dashboard/dashboard.js',
     'client/templates/bundleEdit/bundleEdit.html',
-    'client/templates/bundleEdit/bundleEdit.js'
+    'client/templates/bundleEdit/bundleEdit.js',
+    'client/templates/datepicker/datepicker.html',
+    'client/templates/datepicker/datepicker.js'
   ], 'client');
 });
