@@ -75,11 +75,35 @@
           </div>
         </div>
       </div>
+      {{#if anyPriceBuckets}}
+        <hr>
+        <div class='row text-center'>
+          <h3>Existing Price Buckets</h3>
+          {{#each bundlePriceBuckets}}
+            <div class='well col-sm-3'>
+              <p>Price Bucket Details</p>
+              <p>${{price}} for {{duration}} {{timeUnit}}</p>
+              <button data-duration='{{duration}}' class='btn btn-xs btn-primary removePriceBucket'>Remove</button>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
       <hr>
-      <form class='priceBucket form-inline'>
+      <h3>Add Price Buckets</h3>
+      <div class='priceBucket form-inline'>
         <div class='form-group'>
-          <label for="timeUnit">Time Unit</label>
-          <input class="form-control" value="days" name='timeUnit' id='timeUnit'>
+        <label for="timeUnit">Time Unit</label>
+          <select name='timeUnit' id='timeUnit' class="form-control">
+            <option value='years'>Years</option>
+            <option value='quarters'>Quarters</option>
+            <option value='months'>Months</option>
+            <option value='weeks'>Weeks</option>
+            <option selected value='days'>Days</option>
+            <option value='hours'>Hours</option>
+            <option value='minutes'>Minutes</option>
+            <option value="seconds">Seconds</option>
+            <option value="milliseconds">Milliseconds</option>
+          </select>
         </div>
         <div class='form-group'>
           <label for="duration">Duration</label>
@@ -87,14 +111,13 @@
         </div>
         <div class='form-group'>
           <label for="bucketPrice">Price in $</label>
-          <input type='number' step='0.01' value='0.00' placeholder='0.00' class="form-control" name='bucketPrice' id='bucketPrice'>
+          <input type='number' min='0' step='0.01' value='0.00' placeholder='0.00' class="form-control" name='bucketPrice' id='bucketPrice'>
         </div>
-        <button type='submit' class='btn btn-default'>Add Price Bucket</button>
-      </form>
+        <button class='addBundlePriceBucket btn btn-default'>Add Price Bucket</button>
+      </div>
       <br>
       <div class='row'>
         <button  class='btn btn-block btn-default'>Submit</button>
-
       </div>
     </form>
   </div>
