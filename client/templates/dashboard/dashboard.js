@@ -1,15 +1,16 @@
 Template.productBundlesDashboard.onCreated(function () {
   this.subscribe('ProductsForBundles');
+  Session.setDefault('rentalPriceBundles', []);
 });
 
 Template.productBundlesDashboard.helpers({
   topProducts: function () {
     return ReactionCore.Collections.Products.find({
       type: 'simple'
-    })
+    });
   },
   anyExistingBundles: function () {
-     return ReactionCore.Collections.Products.find({
+    return ReactionCore.Collections.Products.find({
       functionalType: 'bundle',
       type: 'simple'
     }).count() > 0;
