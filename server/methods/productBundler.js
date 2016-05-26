@@ -1,5 +1,5 @@
 Meteor.methods({
-  'productBundles/createBundleVariant': function (productId, product) {
+  'productBundles/createBundleVariant': function (productId, product, rentalPriceBuckets) {
     check(productId, String);
     check(product, {
       title: String,
@@ -14,6 +14,7 @@ Meteor.methods({
         range: String
       }
     });
+    check(rentalPriceBuckets, Match.OneOf(Array, [Object]));
     let variant = _.clone(product);
     variant.ancestors = [productId];
     variant.price = product.price.max;
@@ -21,10 +22,13 @@ Meteor.methods({
     variant.type = 'variant';
     variant.shopId = ReactionCore.getShopId();
     variant.inventoryManagement = false;
+    if (rentalPriceBuckets.length > 0) {
+      variant.rentalPriceBuckets = rentalPriceBuckets;
+    }
     let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}});
     ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.');
   },
-  'productBundles/createBundleProduct': function (product, hashtags) {
+  'productBundles/createBundleProduct': function (product, hashtags, rentalPriceBuckets) {
     check(product, {
       title: String,
       pageTitle: String,
@@ -38,6 +42,7 @@ Meteor.methods({
         range: String
       }
     });
+    check(rentalPriceBuckets, Match.OneOf(Array, [Object]));
     check(hashtags, [String]);
     let insertProduct = _.clone(product);
     insertProduct.functionalType = 'bundle';
@@ -48,7 +53,7 @@ Meteor.methods({
         Meteor.call('products/updateProductTags', productId, hashtag.trim(), null);
       });
       ReactionCore.Log.info('Bundle Product ' + productId + ' was successfully created.');
-      Meteor.call('productBundles/createBundleVariant', productId, product);
+      Meteor.call('productBundles/createBundleVariant', productId, product, rentalPriceBuckets);
     }
   },
   'productBundles/addProductToBundle': function (bundleVariantId, productId, variantIds, label) {

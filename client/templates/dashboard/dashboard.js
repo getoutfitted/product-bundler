@@ -45,7 +45,12 @@ Template.productBundlesDashboard.events({
     };
     product.price.range = product.price.min + '-' + product.price.max;
     let hashtags = event.target.bundleHashtags.value.split(',');
-    Meteor.call('productBundles/createBundleProduct', product, hashtags);
+    const priceBuckets = Session.get('bundlePriceBuckets');
+    Meteor.call('productBundles/createBundleProduct', product, hashtags, priceBuckets);
+    Session.set('bundlePriceBuckets', []);
+    Alerts.removeSeen();
+    Alerts.add(`Bundle Added`, 'success', {
+        autoHide: true});
   },
   'click .addBundlePriceBucket': function (event) {
     event.preventDefault();
