@@ -39,4 +39,14 @@ Meteor.publish('bundleReservationStatus', function (productIds) {
   });
 });
 
+Meteor.publish('productTypeAndTitle', function () {
+  return ReactionCore.Collections.Products.find(
+    {},
+    {fields: {
+      productType: 1,
+      title: 1
+    }}
+  );
+});
+
 
