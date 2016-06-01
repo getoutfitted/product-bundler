@@ -20,3 +20,23 @@ Meteor.publish('BundleProductAndVariants', function (orderId) {
   }
   return this.ready();
 });
+
+Meteor.publish('bundleReservationStatus', function (productIds) {
+  check(productIds, [String]);
+  if (!productIds) {
+    ReactionCore.Log.info('ignoring null request on productReservationStatus subscription');
+    return this.ready();
+  }
+  return ReactionCore.Collections.InventoryVariants.find({
+    productId: {
+      $in: productIds
+    },
+    active: true,
+    'workflow.status': 'active'
+  }, {
+    fields: {productId: 1, unavailableDates: 1, numberOfDatesBooked: 1, 'workflow.status': 1},
+    sort: {unavailableDates: -1}
+  });
+});
+
+

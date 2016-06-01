@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "bootstrap-datepicker": {
+      "version": "1.6.0",
+      "resolved": "https://registry.npmjs.org/bootstrap-datepicker/-/bootstrap-datepicker-1.6.0.tgz",
+      "from": "bootstrap-datepicker@1.6.0"
+    },
+    "jquery": {
+      "version": "2.2.3",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.2.3.tgz",
+      "from": "jquery@2.2.3"
+    },
+    "jquery-ui": {
+      "version": "1.10.5",
+      "resolved": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.10.5.tgz",
+      "from": "jquery-ui@1.10.5"
+    },
+    "moment": {
+      "version": "2.12.0",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.12.0.tgz",
+      "from": "moment@2.12.0"
+    },
+    "moment-timezone": {
+      "version": "0.5.3",
+      "resolved": "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.3.tgz",
+      "from": "moment-timezone@0.5.3"
+    },
+    "twix": {
+      "version": "0.9.0",
+      "resolved": "https://registry.npmjs.org/twix/-/twix-0.9.0.tgz",
+      "from": "twix@0.9.0"
+    }
+  }
+}

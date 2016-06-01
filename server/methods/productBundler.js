@@ -20,6 +20,7 @@ Meteor.methods({
     variant.functionalType = 'bundleVariant';
     variant.type = 'variant';
     variant.shopId = ReactionCore.getShopId();
+    variant.inventoryManagement = false;
     let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}});
     ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.');
   },
@@ -53,7 +54,7 @@ Meteor.methods({
   'productBundles/addProductToBundle': function (bundleVariantId, productId, variantIds, label) {
     check(bundleVariantId, String);
     check(productId, String);
-    check(variantIds, [String]);
+    check(variantIds, [Object]);
     check(label, Match.Optional(String));
     let product = {
       productId: productId,

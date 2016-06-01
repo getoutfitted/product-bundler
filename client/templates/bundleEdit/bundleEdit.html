@@ -18,7 +18,8 @@
                 <th></th>
                 <th>Product</th>
                 <th>Variants</th>
-                <th>Label</th>
+                <th>Variant Label</th>
+                <th>Product Label</th>
               </tr>
             </thead>
             <tbody class='text-left'>
@@ -30,7 +31,12 @@
                 <td>{{details productId 'title'}}</td>
                 <td>
                   {{#each variant in variantIds}}
-                    <p>{{details variant 'size'}} - {{details variant 'title'}}</p>
+                    <p>{{details variant.variantId 'size'}} - {{details variant.variantId 'title'}}</p>
+                  {{/each}}
+                </td>
+                <td>
+                  {{#each variant in variantIds}}
+                    <p>{{variant.label}}</p>
                   {{/each}}
                 </td>
                 <td>{{label}}</td>
@@ -72,12 +78,14 @@
             <h4>Check Variants that you want enabled in Bundle</h4>
             <div class='row'>
             {{#each allVariantsForSelectedProduct}}
-              <div class='col-sm-2'>
+              <div class='col-sm-2 well'>
                 <div class="checkbox">
                   <label>
                     <input value='{{_id}}' type="checkbox">{{size}}-{{color}}-{{sku}}
                   </label>
                 </div>
+                <label for='optionLabel'>Select Option Label</label>
+                <input  name='{{_id}}' value='{{size}}-{{color}}' type="text" class="form-control" id="optionLabel" placeholder="Ex: {{size}}-{{color}}">
               </div>
             {{/each}}
             </div>
