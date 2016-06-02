@@ -68,5 +68,8 @@ Meteor.methods({
         'items.$.variants.selectedBundleOptions': selectedOptions
       }
     });
+  },
+  'productBundler/addBundleItemToCart': function (productId, variantId) {
+
   }
 });
