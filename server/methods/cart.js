@@ -81,10 +81,6 @@ Meteor.methods({
       throw new Meteor.Error(404, "Cart not found",
         "Cart not found for user with such id");
     }
-    // With the flattened model we no longer need to work directly with the
-    // products. But product still could be necessary for a `quantityProcessing`
-    // TODO: need to understand: do we really need product inside
-    // `quantityProcessing`?
     let product;
     let variant;
     ReactionCore.Collections.Products.find({ _id: { $in: [
@@ -97,10 +93,6 @@ Meteor.methods({
         variant = doc;
       }
     });
-    // TODO: this lines still needed. We could uncomment them in future if
-    // decide to not completely remove product data from this method
-    // const product = ReactionCore.Collections.Products.findOne(productId);
-    // const variant = ReactionCore.Collections.Products.findOne(variantId);
     if (!product) {
       Log.warn(`Product: ${ productId } was not found in database`);
       throw new Meteor.Error(404, "Product not found",
@@ -138,10 +130,8 @@ Meteor.methods({
 
       // refresh shipping quotes
       // Meteor.call("shipping/updateShipmentQuotes", cart._id);
-      // // revert workflow to checkout shipping step.
-      // Meteor.call("workflow/revertCartWorkflow", "coreCheckoutShipping");
 
-      Log.info(`cart: add variant ${variantId} to cartId ${cart._id}`);
+      Log.info(`Cart Bundle: added Selected variant ${variantId} to cartId ${cart._id}`);
 
       return result;
     });

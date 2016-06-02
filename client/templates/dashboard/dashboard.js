@@ -64,11 +64,6 @@ Template.productBundlesDashboard.events({
     product.productType = event.target.bundleProductType.value;
     product.gender = event.target.bundleGender.value;
     product.sku = event.target.bundleSku.value;
-    // product.price = {
-    //   max: parseInt(event.target.bundlePrice.value, 10),
-    //   min: parseInt(event.target.bundlePrice.value, 10)
-    // };
-    // product.price.range = product.price.min + '-' + product.price.max;
     const metafields = metafieldMaker(event.target.bundleMetafields.value);
     const hashtags = event.target.bundleHashtags.value.split(',');
     const priceBuckets = Session.get('bundlePriceBuckets');

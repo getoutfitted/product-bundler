@@ -29,8 +29,7 @@ Package.onUse(function (api) {
     'server/publications/products.js',
     'server/methods/productBundler.js',
     'server/methods/cart.js',
-    'server/hooks/before_copy_to_cart_hook.js',
-    'server/hooks/after_add_to_cart_hook.js'
+    'server/hooks/before_copy_to_cart_hook.js'
   ], 'server');
 
   api.addFiles([
