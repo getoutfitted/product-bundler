@@ -17,8 +17,8 @@ Meteor.methods({
     const cart = ReactionCore.Collections.Cart.findOne({ userId: this.userId });
     if (!cart) {
       Log.error(`Cart not found for user: ${ this.userId }`);
-      throw new Meteor.Error(404, "Cart not found",
-        "Cart not found for user with such id");
+      throw new Meteor.Error(404, 'Cart not found',
+        'Cart not found for user with such id');
     }
 
     let items = cart.items;
@@ -30,10 +30,11 @@ Meteor.methods({
         return item;
       }
     });
+    // We are adding QTY as in the cart items are added as Quantity, but in order they get listed as item, so we need to associate selections together.
     const itemNumber = thisBundleItem.quantity;
     const numberOfBundleOptions = thisBundleItem.variants.bundleProducts.length;
     if (numberOfBundleOptions !== selectedVariants.length) {
-      Log.error(`Not all options were selected for item ${thisBundleItem._id} in Cart ${cart._id} `)
+      Log.error(`Not all options were selected for item ${thisBundleItem._id} in Cart ${cart._id} `);
     }
 
     let selectedOptions = thisBundleItem.variants.selectedBundleOptions || [];
@@ -72,14 +73,14 @@ Meteor.methods({
   'productBundler/addBundleItemToCart': function (productId, variantId, bundleId, bundleIndex) {
     check(productId, String);
     check(variantId, String);
-    check(bundleId, String)
+    check(bundleId, String);
     check(bundleIndex, Number);
     const { Log } = ReactionCore;
     const cart = ReactionCore.Collections.Cart.findOne({ userId: this.userId });
     if (!cart) {
       Log.error(`Cart not found for user: ${ this.userId }`);
-      throw new Meteor.Error(404, "Cart not found",
-        "Cart not found for user with such id");
+      throw new Meteor.Error(404, 'Cart not found',
+        'Cart not found for user with such id');
     }
     let product;
     let variant;
@@ -87,7 +88,7 @@ Meteor.methods({
       productId,
       variantId
     ]}}).forEach(doc => {
-      if (doc.type === "simple") {
+      if (doc.type === 'simple') {
         product = doc;
       } else {
         variant = doc;
@@ -95,13 +96,13 @@ Meteor.methods({
     });
     if (!product) {
       Log.warn(`Product: ${ productId } was not found in database`);
-      throw new Meteor.Error(404, "Product not found",
-        "Product with such id was not found!");
+      throw new Meteor.Error(404, 'Product not found',
+        'Product with such id was not found!');
     }
     if (!variant) {
       Log.warn(`Product variant: ${ variantId } was not found in database`);
-      throw new Meteor.Error(404, "ProductVariant not found",
-        "ProductVariant with such id was not found!");
+      throw new Meteor.Error(404, 'ProductVariant not found',
+        'ProductVariant with such id was not found!');
     }
     let quantity = 1;
 
@@ -123,7 +124,7 @@ Meteor.methods({
       }
     }, function (error, result) {
       if (error) {
-        Log.warn("error adding to cart", ReactionCore.Collections.Cart
+        Log.warn('error adding to cart', ReactionCore.Collections.Cart
           .simpleSchema().namedContext().invalidKeys());
         return error;
       }
