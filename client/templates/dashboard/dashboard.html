@@ -46,13 +46,18 @@
             <input id='bundlePageTitle' name='bundlePageTitle' class='form-control' placeholder='This is a basic product. You can do a lot with it.' required>
           </div>
           <div class='form-group'>
-            <label for='bundleDescription'>Bundle Description</label>
-            <textarea id='bundleDescription' name='bundleDescription' placeholder='Description...' class="form-control" rows="3" required></textarea>
+            <label for='bundleSku'>Bundle Sku</label>
+            <input id='bundleSku' name='bundleSku' class='form-control' placeholder='Example: SKU-100-BUNDLE' required>
           </div>
           <div class='form-group'>
             <label for='bundleHandle'>Bundle Handle</label>
             <p><em>Handles cannot contain spaces. <a target='_blank' href='http://slugify.net/'>Go here for help</a></em></p>
             <input id='bundleHandle' name='bundleHandle' class='form-control' placeholder='Example: example-product' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundleDescription'>Bundle Description</label>
+            <p><em>Add a description about what your bundle includes, give a brief description of each product and how it makes a bundle</em></p>
+            <textarea id='bundleDescription' name='bundleDescription' placeholder='Description...' class="form-control" rows="3" required></textarea>
           </div>
         </div>
         <div class='col-md-6'>
@@ -65,13 +70,22 @@
             <input id='bundleProductType' name='bundleProductType' class='form-control' placeholder='Example: Camping Package, Ski Package, etc' required>
           </div>
           <div class='form-group'>
-            <label for='bundlePrice'>Bundle Price</label>
-            <input type='number' name='bundlePrice'  id='bundlePrice' class='form-control' placeholder='Example: Camping Package, Ski Package, etc' required>
+            <label for='bundleGender'>Gender</label>
+            <input id='bundleGender' name='bundleGender' class='form-control' placeholder='Example: Womens, Mens, Unisex ' required>
           </div>
+<!--           <div class='form-group'>
+            <label for='bundlePrice'>Bundle Price</label>
+            <input type='number' name='bundlePrice'  id='bundlePrice' class='form-control' placeholder='Example: $100.00' required>
+          </div> -->
           <div class='form-group'>
             <label for='bundleHashtags'>Bundle Hashtags</label>
             <p><em>Hashtags must be separated by <code>,</code></em></p>
             <input id='bundleHashtags' name='bundleHashtags' class='form-control' placeholder='Womens, Winter, Outfit' required>
+          </div>
+          <div class='form-group'>
+            <label for='bundleMetatags'>Bundle Metatags</label>
+            <p><em>Each metafield need to be separated by <code>|</code> and each key needs to be separated from value by <code>=</code></em></p>
+            <textarea id='bundleMetafields' name='bundleMetafields' placeholder='Example: key=value | key2=value2 | key3=value3' class="form-control" rows="3" required></textarea>
           </div>
         </div>
       </div>

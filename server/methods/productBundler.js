@@ -12,7 +12,9 @@ Meteor.methods({
         max: Number,
         min: Number,
         range: String
-      }
+      },
+      gender: String,
+      sku: String
     });
     check(rentalPriceBuckets, Match.OneOf(Array, [Object]));
     let variant = _.clone(product);
@@ -28,7 +30,7 @@ Meteor.methods({
     let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}});
     ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.');
   },
-  'productBundles/createBundleProduct': function (product, hashtags, rentalPriceBuckets) {
+  'productBundles/createBundleProduct': function (product, hashtags, rentalPriceBuckets, metafields) {
     check(product, {
       title: String,
       pageTitle: String,
@@ -40,13 +42,17 @@ Meteor.methods({
         max: Number,
         min: Number,
         range: String
-      }
+      },
+      gender: String,
+      sku: String
     });
     check(rentalPriceBuckets, Match.OneOf(Array, [Object]));
     check(hashtags, [String]);
+    check(metafields, Match.OneOf(Array, [Object]));
     let insertProduct = _.clone(product);
     insertProduct.functionalType = 'bundle';
     insertProduct.shopId = ReactionCore.getShopId();
+    insertProduct.metafields = metafields;
     let productId = ReactionCore.Collections.Products.insert(insertProduct, {selector: {type: 'simple'}});
     if (productId) {
       _.each(hashtags, function (hashtag) {

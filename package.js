@@ -28,6 +28,7 @@ Package.onUse(function (api) {
     'server/registry.js',
     'server/publications/products.js',
     'server/methods/productBundler.js',
+    'server/methods/cart.js',
     'server/hooks/before_copy_to_cart_hook.js'
   ], 'server');
 
@@ -38,7 +39,5 @@ Package.onUse(function (api) {
     'client/templates/dashboard/dashboard.js',
     'client/templates/bundleEdit/bundleEdit.html',
     'client/templates/bundleEdit/bundleEdit.js'
-    // 'client/templates/datepicker/datepicker.html', // These files were pasted into datepicker.js
-    // 'client/templates/datepicker/datepicker.js'
   ], 'client');
 });
