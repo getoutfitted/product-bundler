@@ -23,10 +23,6 @@ Meteor.publish('BundleProductAndVariants', function (orderId) {
 
 Meteor.publish('bundleReservationStatus', function (productIds) {
   check(productIds, [String]);
-  if (!productIds) {
-    ReactionCore.Log.info('ignoring null request on productReservationStatus subscription');
-    return this.ready();
-  }
   return ReactionCore.Collections.InventoryVariants.find({
     productId: {
       $in: productIds
@@ -48,5 +44,3 @@ Meteor.publish('productTypeAndTitle', function () {
     }}
   );
 });
-
-
