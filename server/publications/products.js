@@ -30,7 +30,7 @@ Meteor.publish('bundleReservationStatus', function (productIds) {
     active: true,
     'workflow.status': 'active'
   }, {
-    fields: {productId: 1, unavailableDates: 1, numberOfDatesBooked: 1, 'workflow.status': 1},
+    fields: {productId: 1, unavailableDates: 1, numberOfDatesBooked: 1, active: 1, 'workflow.status': 1},
     sort: {unavailableDates: -1}
   });
 });
