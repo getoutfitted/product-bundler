@@ -22,7 +22,7 @@ Meteor.methods({
     }
 
     let items = cart.items;
-    let thisBundleItem = _.find(items, function (item) {
+    let bundleItem = _.find(items, function (item) {
       const correctProductId  = item.productId === productId;
       const correctVariantId = item.variants._id === variantId;
       const isBundle = item.variants.functionalType === 'bundleVariant';
@@ -31,21 +31,25 @@ Meteor.methods({
       }
     });
     // We are adding QTY as in the cart items are added as Quantity, but in order they get listed as item, so we need to associate selections together.
-    const itemNumber = thisBundleItem.quantity;
-    const numberOfBundleOptions = thisBundleItem.variants.bundleProducts.length;
+    const itemNumber = bundleItem.quantity;
+    const numberOfBundleOptions = bundleItem.variants.bundleProducts.length;
     if (numberOfBundleOptions !== selectedVariants.length) {
-      Log.error(`Not all options were selected for item ${thisBundleItem._id} in Cart ${cart._id} `);
+      Log.error(`Not all options were selected for item ${bundleItem._id} in Cart ${cart._id} `);
     }
 
-    let selectedOptions = thisBundleItem.variants.selectedBundleOptions || [];
-    _.each(thisBundleItem.variants.bundleProducts, function (bundleProduct) {
+    let selectedOptions = bundleItem.variants.selectedBundleOptions || [];
+    _.each(bundleItem.variants.bundleProducts, function (bundleProduct, index) {
       let bundleSelection = {
         selectionForQtyNumber: itemNumber,
         productId: bundleProduct.productId
       };
       let selectedVariant = _.find(bundleProduct.variantIds, function (option) {
-        return _.contains(selectedVariants, option.variantId);
+        return option.variantId === selectedVariants[index];
       });
+      // let selectedVariant = _.find(bundleProduct.variantIds, function (option) {
+      //   return _.contains(selectedVariants, option.variantId);
+      // });
+      // console.log('single', selectedVariant);
       bundleSelection.variantId = selectedVariant.variantId;
       if (bundleProduct.label && selectedVariant.label) {
         bundleSelection.cartLabel = `${bundleProduct.label} ${selectedVariant.label}`;
