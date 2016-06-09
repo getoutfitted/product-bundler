@@ -26,7 +26,7 @@
             {{#each productsInBundle}}
               <tr>
                 <td>
-                  <button data-product-id='{{productId}}' class='deleteProduct btn btn-default'>Delete Product</button>
+                  <button data-product-id='{{productId}}' data-index={{@index}} class='deleteProduct btn btn-default'>Delete Product</button>
                 </td>
                 <td>{{details productId 'title'}}</td>
                 <td>
