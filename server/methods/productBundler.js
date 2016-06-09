@@ -108,18 +108,5 @@ Meteor.methods({
         });
       }
     }
-    // ReactionCore.Collections.Products.update({
-    //   _id: bundleVariantId
-    // }, {
-    //   $pull: {
-    //     bundleProducts: {
-    //       productId: productId
-    //     }
-    //   }
-    // }, {
-    //   selector: {
-    //     type: 'variant'
-    //   }
-    // });
   }
 });
