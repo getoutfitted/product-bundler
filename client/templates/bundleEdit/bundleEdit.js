@@ -44,8 +44,9 @@ Template.productBundleEdit.events({
   'click .deleteProduct': function (event) {
     event.preventDefault();
     const productId = event.target.dataset.productId;
+    const index = parseInt(event.target.dataset.index, 10);
     const bundleId = Session.get('bundleVariant');
-    Meteor.call('productBundles/deleteProduct', bundleId, productId);
+    Meteor.call('productBundles/deleteProduct', bundleId, productId, index);
   }
 });
 
