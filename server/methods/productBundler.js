@@ -86,21 +86,27 @@ Meteor.methods({
       }
     });
   },
-  'productBundles/deleteProduct': function (bundleVariantId, productId) {
+  'productBundles/deleteProduct': function (bundleVariantId, productId, index) {
     check(bundleVariantId, String);
     check(productId, String);
-    ReactionCore.Collections.Products.update({
-      _id: bundleVariantId
-    }, {
-      $pull: {
-        bundleProducts: {
-          productId: productId
-        }
+    check(index, Number);
+    const productBundle = ReactionCore.Collections.Products.findOne(bundleVariantId);
+    if (productBundle) {
+      const bundleProductOptions = productBundle.bundleProducts;
+      if (bundleProductOptions[index].productId === productId) {
+        bundleProductOptions.splice(index, 1);
+        ReactionCore.Collections.Products.update({
+          _id: bundleVariantId
+        }, {
+          $set: {
+            bundleProducts: bundleProductOptions
+          }
+        }, {
+          selector: {
+            type: 'variant'
+          }
+        });
       }
-    }, {
-      selector: {
-        type: 'variant'
-      }
-    });
+    }
   }
 });
