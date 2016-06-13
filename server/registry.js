@@ -20,5 +20,27 @@ ReactionCore.registerPackage({
     label: 'GetOutfitted Product Bundles Settings',
     name: 'productBundlesSettings',
     template: 'productBundlesSettings'
+  },
+  {
+    route: '/dashboard/productBundles/edit/:_id',
+    name: 'productBundleEdit',
+    template: 'productBundleEdit',
+    workflow: 'editBundleWorkflow'
+  }],
+  layout: [{
+    workflow: 'editBundleWorkflow',
+    layout: 'coreLayout',
+    theme: 'default',
+    enabled: true,
+    structure: {
+      template: 'productBundleEdit',
+      layoutHeader: 'layoutHeader',
+      layoutFooter: '',
+      notFound: 'notFound',
+      dashboardHeader: '',
+      dashboardControls: 'accountsDashboardControls',
+      dashboardHeaderControls: '',
+      adminControlsFooter: 'adminControlsFooter'
+    }
   }]
 });
