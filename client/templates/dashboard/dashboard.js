@@ -1,3 +1,12 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
+import { Session } from 'meteor/session';
+import { Products } from '/lib/collections';
+
+import './dashboard.html';
+
 function metafieldMaker(metaString) {
   check(metaString, String);
   try {
@@ -28,18 +37,18 @@ Template.productBundlesDashboard.onCreated(function () {
 
 Template.productBundlesDashboard.helpers({
   topProducts: function () {
-    return ReactionCore.Collections.Products.find({
+    return Products.find({
       type: 'simple'
     });
   },
   anyExistingBundles: function () {
-    return ReactionCore.Collections.Products.find({
+    return Products.find({
       functionalType: 'bundle',
       type: 'simple'
     }).count() > 0;
   },
   existingBundles: function () {
-    return ReactionCore.Collections.Products.find({
+    return Products.find({
       functionalType: 'bundle',
       type: 'simple'
     });

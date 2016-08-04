@@ -1,6 +1,13 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { Reaction } from '/client/api';
+import { Products } from '/lib/collections';
+import './bundleEdit.html';
+
 Template.productBundleEdit.onCreated(function () {
   this.autorun(() => {
-    let orderId = ReactionRouter.getParam('_id');
+    let orderId = Reaction.Router.getParam('_id');
     if (orderId) {
       this.subscribe('BundleProductAndVariants', orderId);
     }
@@ -10,9 +17,9 @@ Template.productBundleEdit.onCreated(function () {
 Template.productBundleEdit.helpers({
   bundleVariant: function () {
     if (ReactionRouter.getParam('_id')) {
-      const bundleVariant = ReactionCore.Collections.Products.findOne({
-        shopId: ReactionCore.getShopId(),
-        ancestors: ReactionRouter.getParam('_id')
+      const bundleVariant = Products.findOne({
+        shopId: Reaction.getShopId(),
+        ancestors: Reaction.Router.getParam('_id')
       });
       Session.set('bundleVariant', bundleVariant._id);
       return bundleVariant;
@@ -26,7 +33,7 @@ Template.productBundleEdit.helpers({
     return this.bundleProducts;
   },
   details: function (id, value) {
-    let product = ReactionCore.Collections.Products.findOne(id);
+    let product = Products.findOne(id);
     if (product) {
       return product[value];
     }
@@ -62,8 +69,8 @@ Template.addProductsToBundle.onRendered(function () {
 
 Template.addProductsToBundle.helpers({
   allTopProducts: function () {
-    return ReactionCore.Collections.Products.find({
-      shopId: ReactionCore.getShopId(),
+    return Products.find({
+      shopId: Reaction.getShopId(),
       type: 'simple',
       ancestors: [],
       functionalType: { $ne: 'bundle'}
@@ -71,8 +78,8 @@ Template.addProductsToBundle.helpers({
   },
   allVariantsForSelectedProduct: function () {
     let productId = Session.get('productToAddToBundle');
-    return ReactionCore.Collections.Products.find({
-      shopId: ReactionCore.getShopId(),
+    return Products.find({
+      shopId: Reaction.getShopId(),
       type: 'variant',
       color: {$exists: true},
       size: {$exists: true},

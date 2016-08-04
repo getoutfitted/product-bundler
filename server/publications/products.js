@@ -1,16 +1,23 @@
+  // TODO import Inventory Variants!
+
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { Reaction } from '/server/api';
+import { Products }  from '/lib/collections';
+
 Meteor.publish('ProductsForBundles', function () {
-  const shop = ReactionCore.getCurrentShop();
+  const shop = Reaction.getCurrentShop();
   if (Roles.userIsInRole(this.userId, ['admin', 'createProduct'], shop._id)) {
-    return ReactionCore.Collections.Products.find({});
+    return Products.find({});
   }
   return this.ready();
 });
 
 Meteor.publish('BundleProductAndVariants', function (orderId) {
   check(orderId, String);
-  const shopId = ReactionCore.getShopId();
+  const shopId = Reaction.getShopId();
   if (Roles.userIsInRole(this.userId, ['admin', 'createProduct'], ReactionCore.getShopId())) {
-    return ReactionCore.Collections.Products.find({
+    return Products.find({
       shopId: shopId,
       $or: [
         {_id: orderId},
@@ -23,6 +30,7 @@ Meteor.publish('BundleProductAndVariants', function (orderId) {
 
 Meteor.publish('bundleReservationStatus', function (productIds) {
   check(productIds, [String]);
+  // TODO import Inventory Variants!
   return ReactionCore.Collections.InventoryVariants.find({
     productId: {
       $in: productIds
@@ -36,7 +44,7 @@ Meteor.publish('bundleReservationStatus', function (productIds) {
 });
 
 Meteor.publish('productTypeAndTitle', function () {
-  return ReactionCore.Collections.Products.find(
+  return Products.find(
     {},
     {fields: {
       productType: 1,

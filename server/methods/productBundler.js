@@ -1,3 +1,8 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { Reaction, Logger } from '/server/api';
+import { Products } from '/lib/collections';
+import { _ } from 'meteor/underscore';
 Meteor.methods({
   'productBundles/createBundleVariant': function (productId, product, rentalPriceBuckets) {
     check(productId, String);
@@ -22,13 +27,13 @@ Meteor.methods({
     variant.price = product.price.max;
     variant.functionalType = 'bundleVariant';
     variant.type = 'variant';
-    variant.shopId = ReactionCore.getShopId();
+    variant.shopId = Reaction.getShopId();
     variant.inventoryManagement = false;
     if (rentalPriceBuckets.length > 0) {
       variant.rentalPriceBuckets = rentalPriceBuckets;
     }
-    let variantId = ReactionCore.Collections.Products.insert(variant, {selector: {type: 'variant'}});
-    ReactionCore.Log.info('Bundle Variant ' + variantId + ' was successfully created.');
+    let variantId = Products.insert(variant, {selector: {type: 'variant'}});
+    Logger.info('Bundle Variant ' + variantId + ' was successfully created.');
   },
   'productBundles/createBundleProduct': function (product, hashtags, rentalPriceBuckets, metafields) {
     check(product, {
@@ -53,12 +58,12 @@ Meteor.methods({
     insertProduct.functionalType = 'bundle';
     insertProduct.shopId = ReactionCore.getShopId();
     insertProduct.metafields = metafields;
-    let productId = ReactionCore.Collections.Products.insert(insertProduct, {selector: {type: 'simple'}});
+    let productId = Products.insert(insertProduct, {selector: {type: 'simple'}});
     if (productId) {
       _.each(hashtags, function (hashtag) {
         Meteor.call('products/updateProductTags', productId, hashtag.trim(), null);
       });
-      ReactionCore.Log.info('Bundle Product ' + productId + ' was successfully created.');
+      Logger.info('Bundle Product ' + productId + ' was successfully created.');
       Meteor.call('productBundles/createBundleVariant', productId, product, rentalPriceBuckets);
     }
   },
@@ -74,7 +79,7 @@ Meteor.methods({
     if (label) {
       product.label = label;
     }
-    ReactionCore.Collections.Products.update({
+    Products.update({
       _id: bundleVariantId
     }, {
       $addToSet: {
@@ -90,12 +95,12 @@ Meteor.methods({
     check(bundleVariantId, String);
     check(productId, String);
     check(index, Number);
-    const productBundle = ReactionCore.Collections.Products.findOne(bundleVariantId);
+    const productBundle = Products.findOne(bundleVariantId);
     if (productBundle) {
       const bundleProductOptions = productBundle.bundleProducts;
       if (bundleProductOptions[index].productId === productId) {
         bundleProductOptions.splice(index, 1);
-        ReactionCore.Collections.Products.update({
+        Products.update({
           _id: bundleVariantId
         }, {
           $set: {

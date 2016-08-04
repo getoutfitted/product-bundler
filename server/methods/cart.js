@@ -1,3 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
+import { Cart, Products } from '/lib/collections';
+import { Logger } from '/server/api';
+
 function verifyCorrectProduct(variantOptions, selectedVariantId) {
   let result = false;
   _.each(variantOptions, function (variantOption) {
@@ -13,10 +19,9 @@ Meteor.methods({
     check(productId, String);
     check(variantId, String);
     check(selectedVariants, [String]);
-    const { Log } = ReactionCore;
-    const cart = ReactionCore.Collections.Cart.findOne({ userId: this.userId });
+    const cart = Cart.findOne({ userId: this.userId });
     if (!cart) {
-      Log.error(`Cart not found for user: ${ this.userId }`);
+      Logger.error(`Cart not found for user: ${ this.userId }`);
       throw new Meteor.Error(404, 'Cart not found',
         'Cart not found for user with such id');
     }
@@ -34,7 +39,7 @@ Meteor.methods({
     const itemNumber = bundleItem.quantity;
     const numberOfBundleOptions = bundleItem.variants.bundleProducts.length;
     if (numberOfBundleOptions !== selectedVariants.length) {
-      Log.error(`Not all options were selected for item ${bundleItem._id} in Cart ${cart._id} `);
+      Logger.error(`Not all options were selected for item ${bundleItem._id} in Cart ${cart._id} `);
     }
 
     let selectedOptions = bundleItem.variants.selectedBundleOptions || [];
@@ -64,7 +69,7 @@ Meteor.methods({
       selectedOptions.push(bundleSelection);
     });
 
-    ReactionCore.Collections.Cart.update({
+    Cart.update({
       '_id': cart._id,
       'items.productId': productId,
       'items.variants._id': variantId
@@ -79,16 +84,15 @@ Meteor.methods({
     check(variantId, String);
     check(bundleId, String);
     check(bundleIndex, Number);
-    const { Log } = ReactionCore;
-    const cart = ReactionCore.Collections.Cart.findOne({ userId: this.userId });
+    const cart = Cart.findOne({ userId: this.userId });
     if (!cart) {
-      Log.error(`Cart not found for user: ${ this.userId }`);
+      Logger.error(`Cart not found for user: ${ this.userId }`);
       throw new Meteor.Error(404, 'Cart not found',
         'Cart not found for user with such id');
     }
     let product;
     let variant;
-    ReactionCore.Collections.Products.find({ _id: { $in: [
+    Products.find({ _id: { $in: [
       productId,
       variantId
     ]}}).forEach(doc => {
@@ -99,7 +103,7 @@ Meteor.methods({
       }
     });
     if (!product) {
-      Log.warn(`Product: ${ productId } was not found in database`);
+      Logger.warn(`Product: ${ productId } was not found in database`);
       throw new Meteor.Error(404, 'Product not found',
         'Product with such id was not found!');
     }
@@ -110,7 +114,7 @@ Meteor.methods({
     }
     let quantity = 1;
 
-    return ReactionCore.Collections.Cart.update({
+    return Cart.update({
       _id: cart._id
     }, {
       $addToSet: {
@@ -128,7 +132,7 @@ Meteor.methods({
       }
     }, function (error, result) {
       if (error) {
-        Log.warn('error adding to cart', ReactionCore.Collections.Cart
+        Logger.warn('error adding to cart', Cart
           .simpleSchema().namedContext().invalidKeys());
         return error;
       }
@@ -136,7 +140,7 @@ Meteor.methods({
       // refresh shipping quotes
       // Meteor.call("shipping/updateShipmentQuotes", cart._id);
 
-      Log.info(`Cart Bundle: added Selected variant ${variantId} to cartId ${cart._id}`);
+      Logger.info(`Cart Bundle: added Selected variant ${variantId} to cartId ${cart._id}`);
 
       return result;
     });
