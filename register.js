@@ -1,4 +1,6 @@
-ReactionCore.registerPackage({
+import { Reaction } from '/server/api';
+
+Reaction.registerPackage({
   label: 'GetOutfitted Product Bundles',
   name: 'product-bundles',
   icon: 'fa fa-medkit',
