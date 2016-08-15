@@ -1,3 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+import { MethodHooks } from '/server/api';
+import { Cart } from '/lib/collections';
+import { _ } from 'meteor/underscore';
+
+
 /**
  * Before Copy CartToOrder
  * @summary this method occurs after payment, turns selected bundled variants into items so that we can perform inventory check
@@ -6,8 +12,8 @@
  * then adds items to cart, with special flags to identify as part of a bundle and which ones are grouped together.
  * @return {Options} same thing we started with, so that other hooks can occur
  */
-ReactionCore.MethodHooks.before('cart/copyCartToOrder', function (options) {
-  const cart = ReactionCore.Collections.Cart.findOne(options.arguments[0]);
+MethodHooks.before('cart/copyCartToOrder', function (options) {
+  const cart = Cart.findOne(options.arguments[0]);
   if (cart) {
     _.each(cart.items, function (item) {
       if (item.variants.functionalType === 'bundleVariant') {

@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Reaction } from '/server/api';
 import { Products }  from '/lib/collections';
+import { InventoryVariants } from '/imports/plugins/custom/reaction-rental-products/lib/collections';
 
 Meteor.publish('ProductsForBundles', function () {
   const shop = Reaction.getCurrentShop();
@@ -16,7 +17,7 @@ Meteor.publish('ProductsForBundles', function () {
 Meteor.publish('BundleProductAndVariants', function (orderId) {
   check(orderId, String);
   const shopId = Reaction.getShopId();
-  if (Roles.userIsInRole(this.userId, ['admin', 'createProduct'], ReactionCore.getShopId())) {
+  if (Roles.userIsInRole(this.userId, ['admin', 'createProduct'], Reaction.getShopId())) {
     return Products.find({
       shopId: shopId,
       $or: [
@@ -31,7 +32,7 @@ Meteor.publish('BundleProductAndVariants', function (orderId) {
 Meteor.publish('bundleReservationStatus', function (productIds) {
   check(productIds, [String]);
   // TODO import Inventory Variants!
-  return ReactionCore.Collections.InventoryVariants.find({
+  return InventoryVariants.find({
     productId: {
       $in: productIds
     },
