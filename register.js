@@ -14,7 +14,7 @@ Reaction.registerPackage({
     container: 'getoutfitted',
     icon: 'fa fa-medkit',
     template: 'productBundlesDashboard',
-    workflow: 'coreWorkflow',
+    workflow: 'productBundlesWorkflow',
     priority: 3
   }, {
     route: '/dashboard/productBundles/settings',
@@ -43,6 +43,32 @@ Reaction.registerPackage({
       dashboardControls: 'accountsDashboardControls',
       dashboardHeaderControls: '',
       adminControlsFooter: 'adminControlsFooter'
+    }
+  }, {
+    workflow: "productBundlesWorkflow",
+    layout: "coreLayout",
+    theme: "default",
+    enabled: true,
+    structure: {
+      template: "productBundlesDashboard",
+      layoutHeader: "goLayoutHeader",
+      layoutFooter: "goLayoutFooter",
+      notFound: "goNotFound",
+      dashboardControls: "dashboardControls",
+      adminControlsFooter: "adminControlsFooter"
+    }
+  }, {
+    workflow: "productBundlesWorkflow",
+    layout: "getoutfittedLayout",
+    theme: "default",
+    enabled: true,
+    structure: {
+      template: "productBundlesDashboard",
+      layoutHeader: "goLayoutHeader",
+      layoutFooter: "goLayoutFooter",
+      notFound: "goNotFound",
+      dashboardControls: "dashboardControls",
+      adminControlsFooter: "adminControlsFooter"
     }
   }]
 });
